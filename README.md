@@ -2,21 +2,26 @@
 
 This repository contains various example apps instrumented with OpenTracing API and framework integrations.
 
-## Start tracing system
-Choose tracing system, note that some code changes might be required, depending on which tracer is initialized.
+## Start tracing with Jaeger
 
 ```bash
-docker run --rm -it --network=host jaegertracing/all-in-one
-docker run --rm -it -p 9411:9411 openzipkin/zipkin
+docker run -p6831:6831/udp -p6832:6832/udp \
+  -p5778:5778 -p16686:16686 -p14268:14268 jaegertracing/all-in-one:latest
 ```
+open http://localhost:16686 for the Jaeger UI
 
 ## Spring Boot
 [Video](https://youtu.be/RvCcWltMY7U)
 
 ```bash
-mvnw clean install
+cd spring-boot
+./mvnw clean install
 java -jar target/demo-opentracing-0.0.1-SNAPSHOT.jar
+# test:
+curl http://localhost:8080/chaining
 ```
+
+Tracing is done automatically via https://github.com/opentracing-contrib/java-spring-web#how-does-the-server-tracing-work
 
 ## JAX-RS (Wilfly Swarm)
 [Video](https://youtu.be/gVwLenPH8SY)
