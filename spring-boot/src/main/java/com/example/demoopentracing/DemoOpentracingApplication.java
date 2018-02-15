@@ -25,14 +25,14 @@ public class DemoOpentracingApplication {
 		return restTemplateBuilder.build();
 	}
 
-//	@Bean
+	@Bean
 	public io.opentracing.Tracer jaegerTracer() {
 		return new Configuration("spring-boot", new Configuration.SamplerConfiguration(ProbabilisticSampler.TYPE, 1),
 				new Configuration.ReporterConfiguration())
 				.getTracer();
 	}
 
-	@Bean
+	//@Bean
 	public io.opentracing.Tracer zipkinTracer() {
 		OkHttpSender okHttpSender = OkHttpSender.builder()
 				.encoding(Encoding.JSON)
